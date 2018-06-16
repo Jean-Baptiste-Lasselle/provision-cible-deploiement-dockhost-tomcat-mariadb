@@ -234,6 +234,33 @@ checkHealth () {
 	done	
 }
 
+# ---------------------------------------------------------
+# [description]
+# ---------------------------------------------------------
+# Cette fonction permet d'attendre que le
+# conteneur soit dans l'état running
+# Cette fonction prend un argument, nécessaire
+# sinon une erreur est générée (TODO: à implémenter avec
+# exit code)
+checkDockerStatusTOMCAT () {
+	export ETATCOURANTCONTENEUR=starting
+	export ETATCONTENEURPRET=running
+	export NOM_DU_CONTENEUR_INSPECTE=$1
+	
+	while  $(echo "+provision+girofle+ $NOM_DU_CONTENEUR_INSPECTE - HEALTHCHECK: [$ETATCOURANTCONTENEUR]">> $NOMFICHIERLOG); do
+	
+	ETATCOURANTCONTENEUR=$(sudo docker inspect -f '{{json .State.Status}}' $NOM_DU_CONTENEUR_INSPECTE)
+	if [ $ETATCOURANTCONTENEUR == "\"$ETATCONTENEURPRET\"" ]
+	then
+		echo " +++provision+ app + elk +  $NOM_DU_CONTENEUR_INSPECTE est prêt - STATUS: [$ETATCOURANTCONTENEUR]">> $NOMFICHIERLOG
+		break;
+	else
+		echo " +++provision+ app + elk +  $NOM_DU_CONTENEUR_INSPECTE n'est pas prêt - STATUS: [$ETATCOURANTCONTENEUR] - attente d'une seconde avant prochain HealthCheck - ">> $NOMFICHIERLOG
+		sleep 1s
+	fi
+	done	
+}
+
 #----------------------------------------------------------#
 ############################################################
 #					exécution des opérations			   #
@@ -270,7 +297,7 @@ mkdir -p $REPERTOIRE_HOTE_BCKUP_CONF_MARIADB
 
 sudo docker run --name $NOM_CONTENEUR_TOMCAT -p $NUMERO_PORT_SRV_JEE:8080 -d tomcat:$VERSION_TOMCAT
 
-checkHealth $NOM_CONTENEUR_TOMCAT
+checkDockerStatusTOMCAT $NOM_CONTENEUR_TOMCAT
 # http://adressIP:8888/
 
 # clear
