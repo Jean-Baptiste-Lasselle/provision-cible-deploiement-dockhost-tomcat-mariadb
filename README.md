@@ -2,7 +2,7 @@
 
 Ce repo contient:
 * Une recette de provision d'une cible de déploiement tomcat / mariadb, pour y déployer des applications Jee, par exemple des "webapps", faisant usage d'une base de données mariadb
-* une application web Java jee, faisant office d'exemple à déployer dans le cible provisionnée. Il s'agit d'un fichier *war, que vous trouverez dans ce repo à l'emplacement:
+* Une application web Java jee, faisant office d'exemple à déployer dans le cible provisionnée. Il s'agit d'un fichier *war, que vous trouverez dans ce repo à l'emplacement:
 `./application-1/srv-jee/appli-a-deployer-pour-test.war` 
 
 ## Provision de la cible de déploiement
@@ -16,11 +16,14 @@ la [recette de provision d'un hôte docker centos](https://github.com/Jean-Bapti
 
 Cette recette a donc pour dépendances:
 
-* Le système CentOS 7
+* Le système CentOS 7,
+* un serveur NTP
+* GIT 
 * La recette de provision d'un [hôte docker centos](https://github.com/Jean-Baptiste-Lasselle/provision-hote-docker-sur-centos)
 
 
 ### Exécution
+
 Exécutez la recette de provision de la cible de déploiement (ce qui créera un répertoire `provision-dockhost-cible-deploiement-tomcat-mariadb` dans le répertoire courant):
 
 ```
