@@ -52,22 +52,27 @@ Soit en une seule ligne:
 # Déploiements dans la cible provisionnée
 
 
-Pour déployer l'application exemple de ce repo, vous trouverez un script `deployer-appli-web.sh` dans le 
-répertoire `./provision-dockhost-cible-deploiement-tomcat-mariadb/application-1/srv-jee/tomcat/`, créé par 
+Pour déployer l'application exemple de ce repo, ou une application *.war que vous avez packagée, vous 
+trouverez un script `deployer-appli-web.sh` dans le répertoire 
+`./provision-dockhost-cible-deploiement-tomcat-mariadb/application-1/srv-jee/tomcat/`, créé par 
 la recette de provision de la cible de déploiement.
 
-Exécutez-le avec les instructions suivantes:
-`sudo chmod +x ./application-1/srv-jee/tomcat/deployer-appli-web.sh && ./application-1/srv-jee/tomcat/deployer-appli-web.sh $PROVISIONING_HOME/application-1/srv-jee/tomcat/appli-a-deployer-pour-test.war`
+Pour déplopyer l'application exemple:
+
+`export PROVISIONING_HOME=$(pwd)/provision-dockhost-cible-deploiement-tomcat-mariadb && cd $PROVISIONING_HOME/application-1/srv-jee/tomcat && sudo chmod +x ./deployer-appli-web.sh && ./deployer-appli-web.sh $PROVISIONING_HOME/application-1/srv-jee/tomcat/appli-a-deployer-pour-test.war`
 
 
 Pour déployer un fichier war quelconque, utilisez le script `deployer-appli-web.sh` de la manière suivante:
 
 * Soit sans argument, et alors le script vous demandera interactivement, le chemin du fichier wart à déployer:
-  `./provision-dockhost-cible-deploiement-tomcat-mariadb/application-1/srv-jee/tomcat/deployer-appli-web.sh`
+  `export PROVISIONING_HOME=$(pwd)/provision-dockhost-cible-deploiement-tomcat-mariadb && cd $PROVISIONING_HOME/application-1/srv-jee/tomcat && sudo chmod +x ./deployer-appli-web.sh && ./deployer-appli-web.sh`
 * Soit avec un argument, par lequel vous précisez le chemin du fichier wart à déployer:
   ```
-  export CHEMIN_FICHIER_WAR=/opt/deploiements/jee/une-deuxieme-application-web-jee.war
-  ./application-1/srv-jee/tomcat/deployer-appli-web.sh $CHEMIN_FICHIER_WAR
+  export CHEMIN_FICHIER_WAR_A_DEPLOYER=/opt/deploiements/jee/une-deuxieme-application-web-jee.war
+  export PROVISIONING_HOME=$(pwd)/provision-dockhost-cible-deploiement-tomcat-mariadb 
+  cd $PROVISIONING_HOME/application-1/srv-jee/tomcat
+  sudo chmod +x ./deployer-appli-web.sh
+  ./deployer-appli-web.sh $CHEMIN_FICHIER_WAR_A_DEPLOYER
   ```
 
 
