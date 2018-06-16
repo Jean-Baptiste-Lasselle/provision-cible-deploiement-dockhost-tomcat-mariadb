@@ -47,7 +47,7 @@ cd $PROVISIONING_HOME
 
 Soit en une seule ligne:
  
-`export URI_REPO_GIT_RECETTE=https://github.com/Jean-Baptiste-Lasselle/provision-cible-deploiement-dockhost-tomcat-mariadb && export PROVISIONING_HOME && PROVISIONING_HOME=$(pwd)/provision-dockhost-cible-deploiement-tomcat-mariadb && rm -rf $PROVISIONING_HOME && mkdir -p $PROVISIONING_HOME && cd $PROVISIONING_HOME && export $NOMFICHIERLOG=provision.log && git clone $URI_REPO_GIT_RECETTE . && sudo chmod +x $PROVISIONING_HOME/operations.sh && $PROVISIONING_HOME/operations.sh && cd $PROVISIONING_HOME >> $NOMFICHIERLOG`
+`export URI_REPO_GIT_RECETTE=https://github.com/Jean-Baptiste-Lasselle/provision-cible-deploiement-dockhost-tomcat-mariadb && export PROVISIONING_HOME && PROVISIONING_HOME=$(pwd)/provision-dockhost-cible-deploiement-tomcat-mariadb && rm -rf $PROVISIONING_HOME && mkdir -p $PROVISIONING_HOME && cd $PROVISIONING_HOME && export NOMFICHIERLOG=provision.log && git clone $URI_REPO_GIT_RECETTE . && sudo chmod +x $PROVISIONING_HOME/operations.sh && $PROVISIONING_HOME/operations.sh && cd $PROVISIONING_HOME >> $NOMFICHIERLOG`
 
 
 # Déploiements dans la cible provisionnée
