@@ -5,14 +5,15 @@ Ce repo contient:
 * Une application web Java jee, faisant office d'exemple à déployer dans le cible provisionnée. Il s'agit d'un fichier *war, que vous trouverez dans ce repo à l'emplacement:
 `./application-1/srv-jee/appli-a-deployer-pour-test.war` 
 
-## Provision de la cible de déploiement
+# Dépendances 
 
-Ce repository contient donc une recette de provision d'une cible de déploiement tomcat / mariadb.
+Cette recette doit être exécutée sur une machine sur laquelle:
 
-### Dépendances 
+* Le système d'exploitation est CentOS 7,
+* Le système d'exploitation CentOS 7 est configuré pour être synchronisé avec un serveur NTP
+* GIT est installé
+* La recette de provision d'un [hôte docker centos](https://github.com/Jean-Baptiste-Lasselle/provision-hote-docker-sur-centos) a été exécutée
 
-Cette recette doit être exécutée sur une machine sur laquelle CentOS 7 est le système d'exploitation, et sur laquelle 
-la [recette de provision d'un hôte docker centos](https://github.com/Jean-Baptiste-Lasselle/provision-hote-docker-sur-centos) a été exécutée. 
 
 Cette recette a donc pour dépendances:
 
@@ -22,7 +23,11 @@ Cette recette a donc pour dépendances:
 * La recette de provision d'un [hôte docker centos](https://github.com/Jean-Baptiste-Lasselle/provision-hote-docker-sur-centos)
 
 
-### Exécution
+# Provision de la cible de déploiement
+
+Ce repository contient donc une recette de provision d'une cible de déploiement tomcat / mariadb.
+
+
 
 Exécutez la recette de provision de la cible de déploiement (ce qui créera un répertoire `provision-dockhost-cible-deploiement-tomcat-mariadb` dans le répertoire courant):
 
@@ -45,7 +50,7 @@ Soit en une seule ligne:
 `export URI_REPO_GIT_RECETTE=https://github.com/Jean-Baptiste-Lasselle/provision-cible-deploiement-dockhost-tomcat-mariadb && export PROVISIONING_HOME && PROVISIONING_HOME=$(pwd)/provision-dockhost-cible-deploiement-tomcat-mariadb && rm -rf $PROVISIONING_HOME && mkdir -p $PROVISIONING_HOME && cd $PROVISIONING_HOME && export $NOMFICHIERLOG=provision.log && git clone $URI_REPO_GIT_RECETTE . && sudo chmod +x $PROVISIONING_HOME/operations.sh && $PROVISIONING_HOME/operations.sh && cd $PROVISIONING_HOME >> $NOMFICHIERLOG`
 
 
-## Déploiements dans la cible provisionnée
+# Déploiements dans la cible provisionnée
 
 
 Pour déployer l'application exemple de ce repo, vous trouverez un script `deployer-appli-web.sh` dans le 
