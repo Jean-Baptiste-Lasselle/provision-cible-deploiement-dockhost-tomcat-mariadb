@@ -8,9 +8,19 @@ Ce repo contient:
 ## Provision de la cible de déploiement
 
 Ce repository contient donc une recette de provision d'une cible de déploiement tomcat / mariadb.
-Cette recette doit être exécutée sur une machine CentOS 7, sur laquelle Docker est installé. 
-Il s'agit donc d'une recette de provision pour un [hôte docker centos](https://github.com/Jean-Baptiste-Lasselle/provision-hote-docker-sur-centos).
 
+### Dépendances 
+
+Cette recette doit être exécutée sur une machine sur laquelle CentOS 7 est le système d'exploitation, et sur laquelle 
+la [recette de provision d'un hôte docker centos](https://github.com/Jean-Baptiste-Lasselle/provision-hote-docker-sur-centos) a été exécutée. 
+
+Cette recette a donc pour dépendances:
+
+* Le système CentOS 7
+* La recette de provision d'un [hôte docker centos](https://github.com/Jean-Baptiste-Lasselle/provision-hote-docker-sur-centos)
+
+
+### Exécution
 Exécutez la recette de provision de la cible de déploiement (ce qui créera un répertoire `provision-dockhost-cible-deploiement-tomcat-mariadb` dans le répertoire courant):
 
 ```
