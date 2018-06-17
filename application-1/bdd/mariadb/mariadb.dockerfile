@@ -19,7 +19,7 @@ RUN curl -o docker-mariadb-healthcheck https://raw.githubusercontent.com/docker-
 RUN cp -f docker-mariadb-healthcheck /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-mariadb-healthcheck
 RUN rm -f docker-mariadb-healthcheck
-HEALTHCHECK CMD ["docker-mariadb-healthcheck"]
-# HEALTHCHECK --interval=1s --timeout=300s --start-period=1s --retries=300 CMD curl --fail /usr/bin/mysql --user=VAL_USER_MVN_PLUGIN_BDD --password=VAL_PWD_MVN_PLUGIN_BDD --execute "SHOW DATABASES;" || exit 1
+# HEALTHCHECK CMD ["docker-mariadb-healthcheck"]
+HEALTHCHECK --interval=1s --timeout=300s --start-period=1s --retries=300 CMD /usr/bin/mysql --user=VAL_USER_MVN_PLUGIN_BDD --password=VAL_PWD_MVN_PLUGIN_BDD --execute "SHOW DATABASES;" || exit 1
 EXPOSE 3306
 CMD ["mysqld"]
