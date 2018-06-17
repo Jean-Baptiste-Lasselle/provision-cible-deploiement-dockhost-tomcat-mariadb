@@ -71,6 +71,8 @@ export NUMERO_PORT_SRV_JEE=VALEUR_NUMERO_PORT_SRV_JEE
 # 
 export ADRESSE_IP_SGBDR=VALEUR_ADRESSE_IP_SGBDR
 export NUMERO_PORT_SGBDR=VALEUR_NUMERO_PORT_SGBDR
+
+
 # 
 ############################################################
 ############################################################
@@ -103,6 +105,7 @@ afficher_message_prerequis () {
 # sinon une erreur est générée (TODO: à implémenter avec
 # exit code)
 checkHealth () {
+    NOMFICHIERLOG=checkhealth-deploiements.log
 	export ETATCOURANTCONTENEUR=starting
 	export ETATCONTENEURPRET=healthy
 	export NOM_DU_CONTENEUR_INSPECTE=$1
