@@ -10,6 +10,7 @@ ADD ./configurer-utilisateur-mgmt.sh .
 RUN chmod +x ./creer-bdd-application.sh
 RUN chmod +x ./creer-utilisateur-applicatif.sh
 RUN chmod +x ./configurer-utilisateur-mgmt.sh
-HEALTHCHECK --interval=1s --timeout=300s --start-period=1s --retries=300 CMD curl --fail http://VAL_ADRESSE_IP_SRV_MARIADB:VAL_NO_PORT_IP_SRV_MARIADB/ || exit 1
+# HEALTHCHECK --interval=1s --timeout=300s --start-period=1s --retries=300 CMD curl --fail http://VAL_ADRESSE_IP_SRV_MARIADB:VAL_NO_PORT_IP_SRV_MARIADB/ || exit 1
+HEALTHCHECK --interval=1s --timeout=300s --start-period=1s --retries=300 CMD curl --fail /usr/bin/mysql --user=foo --password=foo --execute \"SHOW DATABASES;\" || exit 1
 EXPOSE 3306
 CMD ["mysqld"]
