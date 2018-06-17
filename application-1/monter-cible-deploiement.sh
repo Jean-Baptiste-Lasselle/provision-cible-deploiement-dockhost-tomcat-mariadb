@@ -252,15 +252,40 @@ checkDockerStatusTOMCAT () {
 	ETATCOURANTCONTENEUR=$(sudo docker inspect -f '{{json .State.Status}}' $NOM_DU_CONTENEUR_INSPECTE)
 	if [ $ETATCOURANTCONTENEUR == "\"$ETATCONTENEURPRET\"" ]
 	then
-		echo " +++provision+ app + elk +  $NOM_DU_CONTENEUR_INSPECTE est prêt - STATUS: [$ETATCOURANTCONTENEUR]">> $NOMFICHIERLOG
+		echo " +++provision+ cible + deploiement + srv jee + sgbdr +  $NOM_DU_CONTENEUR_INSPECTE est prêt - STATUS: [$ETATCOURANTCONTENEUR]">> $NOMFICHIERLOG
 		break;
 	else
-		echo " +++provision+ app + elk +  $NOM_DU_CONTENEUR_INSPECTE n'est pas prêt - STATUS: [$ETATCOURANTCONTENEUR] - attente d'une seconde avant prochain HealthCheck - ">> $NOMFICHIERLOG
+		echo " +++provision+ cible + deploiement + srv jee + sgbdr +  $NOM_DU_CONTENEUR_INSPECTE n'est pas prêt - STATUS: [$ETATCOURANTCONTENEUR] - attente d'une seconde avant prochain HealthCheck - ">> $NOMFICHIERLOG
 		sleep 1s
 	fi
 	done	
 }
-
+# ---------------------------------------------------------
+# [description]
+# ---------------------------------------------------------
+# Cette fonction permet d'attendre que le
+# conteneur soit dans l'état running
+# Cette fonction prend un argument, nécessaire
+# sinon une erreur est générée (TODO: à implémenter avec
+# exit code)
+checkDockerContainerRunningStatus() {
+	export ETATCOURANTCONTENEUR=starting
+	export ETATCONTENEURPRET=running
+	export NOM_DU_CONTENEUR_INSPECTE=$1
+	
+	while  $(echo "+provision+girofle+ $NOM_DU_CONTENEUR_INSPECTE - HEALTHCHECK: [$ETATCOURANTCONTENEUR]">> $NOMFICHIERLOG); do
+	
+	ETATCOURANTCONTENEUR=$(sudo docker inspect -f '{{json .State.Status}}' $NOM_DU_CONTENEUR_INSPECTE)
+	if [ $ETATCOURANTCONTENEUR == "\"$ETATCONTENEURPRET\"" ]
+	then
+		echo " +++provision+ elk +  $NOM_DU_CONTENEUR_INSPECTE est prêt - STATUS: [$ETATCOURANTCONTENEUR]">> $NOMFICHIERLOG
+		break;
+	else
+		echo " +++provision+ elk +  $NOM_DU_CONTENEUR_INSPECTE n'est pas prêt - STATUS: [$ETATCOURANTCONTENEUR] - attente d'une seconde avant prochain HealthCheck - ">> $NOMFICHIERLOG
+		sleep 1s
+	fi
+	done	
+}
 #----------------------------------------------------------#
 ############################################################
 #					exécution des opérations			   #
@@ -297,7 +322,7 @@ mkdir -p $REPERTOIRE_HOTE_BCKUP_CONF_MARIADB
 
 sudo docker run --name $NOM_CONTENEUR_TOMCAT -p $NUMERO_PORT_SRV_JEE:8080 -d tomcat:$VERSION_TOMCAT
 
-checkDockerStatusTOMCAT $NOM_CONTENEUR_TOMCAT
+checkDockerContainerRunningStatus $NOM_CONTENEUR_TOMCAT
 # http://adressIP:8888/
 
 # clear
@@ -334,6 +359,7 @@ clear
 sudo docker run --name $NOM_CONTENEUR_MARIADB -e MYSQL_ROOT_PASSWORD=$MARIADB_MDP_ROOT_PASSWORD -e MYSQL_USER=$MARIADB_DB_MGMT_USER_NAME -e MYSQL_PASSWORD=$MARIADB_DB_MGMT_USER_PWD -p $NO_PORT_EXTERIEUR_MARIADB:3306 -d $NOM_IMAGE_DOCKER_SGBDR  --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
 checkHealth $NOM_CONTENEUR_MARIADB
+# checkDockerContainerRunningStatus $NOM_CONTENEUR_MARIADB
 
 echo ""
 echo " ---------------------------------------------------------------------------------------------------- "
@@ -421,7 +447,7 @@ rm -f $MAISON/application-1/sudoers.ajout
 # URL_REPO_GIT_ASSISTANT_DEPLOYEUR_MVN_PLUGIN=https://github.com/Jean-Baptiste-Lasselle/assistant-deploiements-appli1.git
 
 echo "" >> $MAISON/application-1/sudoers.ajout
-echo "# Allow DEPLOYEUR-MAVEN-PLUGIN to execute deployment commands" >> $MAISON/application-1/sudoers.ajout
+echo "# Allow FULLSTACK-MAVEN-PLUGIN to execute deployment commands" >> $MAISON/application-1/sudoers.ajout
 echo "$MVN_PLUGIN_OPERATEUR_LINUX_USER_NAME ALL=NOPASSWD: /usr/bin/docker cp*, /usr/bin/docker restart*, /usr/bin/docker exec*, /bin/rm -rf ./$NOM_REPO_GIT_ASSISTANT_DEPLOYEUR_MVN_PLUGIN" >> $MAISON/application-1/sudoers.ajout
 echo "" >> $MAISON/application-1/sudoers.ajout
 # echo "" >> $MAISON/application-1/sudoers.ajout
@@ -516,7 +542,8 @@ sudo docker exec -it $NOM_CONTENEUR_TOMCAT /bin/bash -c "echo \"export CATALINA_
  
 sudo docker restart $NOM_CONTENEUR_TOMCAT
 
-checkHealth $NOM_CONTENEUR_TOMCAT
+# checkHealth $NOM_CONTENEUR_TOMCAT
+checkDockerContainerRunningStatus $NOM_CONTENEUR_TOMCAT
 
 clear
 echo " --------------------------------------------------------  "
