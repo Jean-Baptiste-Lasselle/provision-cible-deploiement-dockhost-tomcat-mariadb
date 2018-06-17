@@ -208,7 +208,7 @@ demander_choix_no_ports () {
 	echo "Quel nuéméro de port souhaitez-vous que le serveur jee utilise?"
 	read SAISIE_NUMERO_PORT_SRV_JEE
 	
-	if [ "x$SAISIE_NUMERO_PORT_SGBDR" = "x" ]; then
+	if [ "x$SAISIE_NUMERO_PORT_SRV_JEE" = "x" ]; then
        NUMERO_PORT_SRV_JEE=$NUMERO_PORT_SRV_JEE_PAR_DEFAUT
 	else
 	   NUMERO_PORT_SRV_JEE=$SAISIE_NUMERO_PORT_SRV_JEE
