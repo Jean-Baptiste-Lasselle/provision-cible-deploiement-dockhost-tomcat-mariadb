@@ -1,5 +1,5 @@
 FROM mariadb:10.1
-RUN apt-get update -y && apt-get install -y curl ./my.cnf .
+RUN apt-get update -y && apt-get install -y curl
 ADD ./my.cnf .
 RUN cp /my.cnf /etc/mysql/my.cnf
 ADD ./creer-bdd-application.sql .
