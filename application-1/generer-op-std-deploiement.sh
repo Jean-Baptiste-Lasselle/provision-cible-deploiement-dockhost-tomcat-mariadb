@@ -178,14 +178,16 @@ sed -i "s/VALEUR_ADRESSE_IP_SGBDR/$ADRESSE_IP_SGBDR/g" $MAISON/application-1/srv
 sed -i "s/VALEUR_NUMERO_PORT_SGBDR/$NUMERO_PORT_SGBDR/g" $MAISON/application-1/srv-jee/tomcat/deployer-appli-web.sh
 
 # générer le fichier my.cnf avec la variable VALEUR_ADRESSE_IP_SRV_JEE et sed
-sed -i "s/VALEUR_ADRESSE_IP_SRV_JEE/$ADRESSE_IP_SGBDR/g" $MAISON/application-1/bdd/mariadb/my.cnf
+# cette substitution n'est pas nécessaire, car mariadb est packagée dans un
+# conteneur docker, et c'est au niveau du conteneur, que se déifnira le binding à une adresse IP particulière de l'hôte docker.
+# sed -i "s/VALEUR_ADRESSE_IP_SRV_JEE/$ADRESSE_IP_SGBDR/g" $MAISON/application-1/bdd/mariadb/my.cnf
 
 # Injection des valeurs dans le dockerfile mariadb, pour le healthcheck
 # sed -i "s/VAL_ADRESSE_IP_SRV_MARIADB/$ADRESSE_IP_SGBDR/g" $MAISON/application-1/bdd/mariadb/mariadb.dockerfile
 # sed -i "s/VAL_NO_PORT_IP_SRV_MARIADB/$NUMERO_PORT_SGBDR/g" $MAISON/application-1/bdd/mariadb/mariadb.dockerfile
 sed -i "s/VAL_USER_MVN_PLUGIN_BDD/$DB_MGMT_USER_NAME/g" $MAISON/application-1/bdd/mariadb/mariadb.dockerfile
-sed -i "s/VAL_NO_PORT_IP_SRV_MARIADB/$DB_MGMT_USER_PWD/g" $MAISON/application-1/bdd/mariadb/mariadb.dockerfile
- # --user= --password=VAL_PWD_MVN_PLUGIN_BDD
+sed -i "s/VAL_PWD_MVN_PLUGIN_BDD/$DB_MGMT_USER_PWD/g" $MAISON/application-1/bdd/mariadb/mariadb.dockerfile
+ # --user= --password=
  # DB_MGMT_USER_NAME=jean
 # DB_MGMT_USER_PWD=jean
 # echo "HEALTHCHECK --interval=1s --timeout=300s --start-period=1s --retries=300 CMD curl --fail http://VAL_ADRESSE_IP_SRV_MARIADB:VAL_NO_PORT_IP_SRV_MARIADB/ || exit 1" >> $DOCKERFILE_INSTANCES_GITLAB
