@@ -92,3 +92,7 @@ L'utilisateur jibl peut utiliser les commandes suivantes sur pc-65 :
 [jibl@pc-65 ~]$
 
 ```
+
+# Petites références
+
+* https://kuttler.eu/en/code/docker-compose-mariadb-mysql-healthcheck/   pour les healthcheck mariadb
