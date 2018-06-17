@@ -16,7 +16,7 @@ RUN chmod +x ./configurer-utilisateur-mgmt.sh
 # et ce, avec la dépendance:
 # https://github.com/docker-library/healthcheck/blob/master/mysql/docker-healthcheck
 RUN curl -o docker-mariadb-healthcheck https://raw.githubusercontent.com/docker-library/healthcheck/master/mysql/docker-healthcheck
-COPY docker-mariadb-healthcheck /usr/local/bin/
+RUN cp -f docker-mariadb-healthcheck /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-mariadb-healthcheck
 RUN rm -f docker-mariadb-healthcheck
 HEALTHCHECK CMD ["docker-mariadb-healthcheck"]
