@@ -274,7 +274,9 @@ read
 clear
 
 demanderAdresseIPserveurJee
+# Pour cette recette, le serveur JEe et le serveur Mariadb utiliseront la même adresse IP.
 
+ADRESSE_IP_SGBDR=$ADRESSE_IP_SRV_JEE
 # echo "Souhaitez-vous configurer une adresse IP statique pour cette machine ? (oui/non)"
 # car ma procédure de reconfiguration réseau s'applique sur les
 # interfaces réseau linux classiques, mais pas sur les interfaces réseau linux wifi

@@ -178,6 +178,9 @@ sed -i "s/VALEUR_ADRESSE_IP_SGBDR/$ADRESSE_IP_SGBDR/g" $MAISON/application-1/srv
 sed -i "s/VALEUR_NUMERO_PORT_SGBDR/$NUMERO_PORT_SGBDR/g" $MAISON/application-1/srv-jee/tomcat/deployer-appli-web.sh
 
 # générer le fichier my.cnf avec la variable VALEUR_ADRESSE_IP_SRV_JEE et sed
-sed -i "s/VALEUR_ADRESSE_IP_SRV_JEE/$ADRESSE_IP_SRV_JEE/g" $MAISON/application-1/bdd/mariadb/my.cnf
+sed -i "s/VALEUR_ADRESSE_IP_SRV_JEE/$ADRESSE_IP_SGBDR/g" $MAISON/application-1/bdd/mariadb/my.cnf
 
-
+# Injection des valeurs dans le dockerfile mariadb, pour le healthcheck
+sed -i "s/VAL_ADRESSE_IP_SRV_MARIADB/$ADRESSE_IP_SGBDR/g" $MAISON/application-1/bdd/mariadb/mariadb.dockerfile
+sed -i "s/VAL_NO_PORT_IP_SRV_MARIADB/$NUMERO_PORT_SGBDR/g" $MAISON/application-1/bdd/mariadb/mariadb.dockerfile
+# echo "HEALTHCHECK --interval=1s --timeout=300s --start-period=1s --retries=300 CMD curl --fail http://VAL_ADRESSE_IP_SRV_MARIADB:VAL_NO_PORT_IP_SRV_MARIADB/ || exit 1" >> $DOCKERFILE_INSTANCES_GITLAB
